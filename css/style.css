@@ -1,0 +1,22 @@
+
+body {
+    background-color: rgb(58, 50, 75);
+    font-family: sans-serif;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    flex: auto;
+}
+
+#book-form {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    max-width: 300px;
+    max-height: 800px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgb(144, 87, 219);
+    padding: 20px;
+    border-radius: 7%;
+}
