@@ -14,13 +14,12 @@
 
   <body>
     <header>
-      <nav class="navbar">
-        <a href="#">Home </a>
-        <a href="#">Logged Books</a>
+      <a href="#" id="nav-home">Home</a>
+      <a href="#" id="nav-logged-books">Logged Books</a>
       </nav>
     </header>
 
-    <section id="book-form">
+    <section id="form-view">
       <h2 id="log-book">Log Book</h2>
       <form id="form">
         <label>Title:</label>
@@ -62,10 +61,12 @@
         <br />
         <button type="button" id="add-book">Add Book</button>
       </form>
+
+      
     </section>
 
-    <p id="total-books">Total Books Logged:</p>
-    <br />
+   
+  
     <!--
     <section id="book-filter">
       <select id="select-filter" placeholder="Select Filter">
@@ -84,7 +85,11 @@
       <button type="button" id="filter-button">Filter</button>
     </section>
 -->
-    <section class="book-log"></section>
+    <section id="logged-books-view" class="hidden">
+
+       <p id="total-books">Total Books Logged:</p>
+    </section>
+
     <script src="js/app.js"></script>
   </body>
 </html>

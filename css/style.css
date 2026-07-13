@@ -9,7 +9,7 @@ body {
     font-family: 'inter', sans-serif;
 }
 
-.navbar {
+header {
     display: flex;
     position: fixed;
     top: 0;
@@ -21,7 +21,7 @@ body {
     gap: 10px;
 }
 
-#book-form {
+#form-view {
     width:300px;
     display: flex;
     flex-direction: column;
@@ -70,3 +70,8 @@ select {
    border-radius: 5px; 
    border: 1px; 
 }
+
+.hidden {
+    display: none !important;
+}
+

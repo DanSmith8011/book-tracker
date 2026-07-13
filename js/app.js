@@ -7,9 +7,14 @@ const year = document.getElementById('book-year')
 const genre = document.getElementById('select-genre')
 const addBookButton= document.getElementById('add-book')
 const totalBooks = document.getElementById('total-books')
-const bookLog = document.querySelector('.book-log')
+const bookLog = document.querySelector('#logged-books-view')
+const navHome = document.getElementById('nav-home')
+const loggedBooksNav = document.getElementById('nav-logged-books')
+const formSection = document.getElementById('form-view')
+const loggedBookSection = document.getElementById('logged-books-view')
 
-addBookButton.addEventListener('click', function (e) {
+
+ addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
     if (title.value && author.value && year.value && genre.value) {
         const newBook = {
@@ -41,3 +46,13 @@ function renderBooks(arr) {
     bookLog.appendChild(bookCard)
     })
 }
+
+navHome.addEventListener('click', function (e){
+    loggedBookSection.classList.add('hidden')
+    formSection.classList.remove('hidden')
+})
+
+loggedBooksNav.addEventListener('click', function (e){
+    loggedBookSection.classList.remove('hidden')
+    formSection.classList.add('hidden')
+})
