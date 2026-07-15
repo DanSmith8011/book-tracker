@@ -7,12 +7,13 @@ const year = document.getElementById('book-year')
 const genre = document.getElementById('select-genre')
 const addBookButton= document.getElementById('add-book')
 const totalBooks = document.getElementById('total-books')
-const bookLog = document.querySelector('#logged-books-view')
+const bookLog = document.getElementById('book-cards')
 const navHome = document.getElementById('nav-home')
 const loggedBooksNav = document.getElementById('nav-logged-books')
 const formSection = document.getElementById('form-view')
 const loggedBookSection = document.getElementById('logged-books-view')
-
+const filter = document.getElementById('select-filter')
+const filterButton = document.getElementById('filter-button')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -26,6 +27,7 @@ const loggedBookSection = document.getElementById('logged-books-view')
 
     books.push(newBook)
     renderBooks(books)
+    totalBooks.textContent = `Total Books Logged: ${books.length}`
     } else {
         alert('Please fill out all the fields')
     }
@@ -45,6 +47,8 @@ function renderBooks(arr) {
 
     bookLog.appendChild(bookCard)
     })
+
+
 }
 
 navHome.addEventListener('click', function (e){
@@ -56,3 +60,15 @@ loggedBooksNav.addEventListener('click', function (e){
     loggedBookSection.classList.remove('hidden')
     formSection.classList.add('hidden')
 })
+
+filterButton.addEventListener('click', function (e) {
+    const selectedGenre = filter.value
+
+    if (selectedGenre === 'all') {
+        renderBooks(books)
+    } else {
+        const filteredBooks = books.filter(book => book.genre === selectedGenre) 
+        renderBooks(filteredBooks) 
+    }
+})
+
