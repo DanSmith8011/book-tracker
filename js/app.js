@@ -19,6 +19,7 @@ const filterButton = document.getElementById('filter-button')
     e.preventDefault()
     if (title.value && author.value && year.value && genre.value) {
         const newBook = {
+            id: Date.now(),
             title: title.value,
             author: author.value,
             year: year.value,
@@ -39,11 +40,19 @@ function renderBooks(arr) {
     arr.forEach(book =>  {
     const bookCard = document.createElement('article')
     bookCard.innerHTML = `
+   
     <h2>${book.title}</h2>
     <p>${book.author}</p>
     <p>${book.year}</p>
     <p>${book.genre}</p>
+    <button data-id=${book.id} >Delete</button>
     `
+    bookCard.querySelector('button').addEventListener('click', function (e){
+        const selectedId = this.dataset.id
+        const index = books.findIndex(b => b.id == selectedId)
+        books.splice(index, 1)
+        renderBooks(books)
+    })
 
     bookLog.appendChild(bookCard)
     })
@@ -71,4 +80,6 @@ filterButton.addEventListener('click', function (e) {
         renderBooks(filteredBooks) 
     }
 })
+
+
 
