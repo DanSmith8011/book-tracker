@@ -14,6 +14,7 @@ const formSection = document.getElementById('form-view')
 const loggedBookSection = document.getElementById('logged-books-view')
 const filter = document.getElementById('select-filter')
 const filterButton = document.getElementById('filter-button')
+const clearButton = document.getElementById('clear-button')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -82,4 +83,7 @@ filterButton.addEventListener('click', function (e) {
 })
 
 
-
+clearButton.addEventListener('click', function (e) {
+    books.splice(0, books.length)
+    renderBooks(books)
+})
