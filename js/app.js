@@ -34,6 +34,8 @@ const clearButton = document.getElementById('clear-button')
         alert('Please fill out all the fields')
     }
 
+form.reset()
+
 })
 
 function renderBooks(arr) {
