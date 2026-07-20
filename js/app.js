@@ -38,26 +38,31 @@ const clearButton = document.getElementById('clear-button')
 
 function renderBooks(arr) {
     bookLog.innerHTML = ''
-    arr.forEach(book =>  {
-    const bookCard = document.createElement('article')
-    bookCard.innerHTML = `
+
+    if (books.length == 0) {
+         bookLog.innerHTML = '<p>No books logged yet</p>'
+    } else {
+        arr.forEach(book =>  {
+        const bookCard = document.createElement('article')
+        bookCard.innerHTML = `
    
-    <h2>${book.title}</h2>
-    <p>${book.author}</p>
-    <p>${book.year}</p>
-    <p>${book.genre}</p>
-    <button data-id=${book.id} >Delete</button>
-    `
-    bookCard.querySelector('button').addEventListener('click', function (e){
-        const selectedId = this.dataset.id
-        const index = books.findIndex(b => b.id == selectedId)
-        books.splice(index, 1)
-        renderBooks(books)
-    })
+        <h2>${book.title}</h2>
+        <p>${book.author}</p>
+        <p>${book.year}</p>
+        <p>${book.genre}</p>
+        <button data-id=${book.id} >Delete</button>
+        `
+        bookCard.querySelector('button').addEventListener('click', function (e){
+            const selectedId = this.dataset.id
+            const index = books.findIndex(b => b.id == selectedId)
+            books.splice(index, 1)
+            renderBooks(books)
+        })
 
-    bookLog.appendChild(bookCard)
-    })
+        bookLog.appendChild(bookCard)
 
+     
+        })}
 
 }
 
@@ -82,8 +87,9 @@ filterButton.addEventListener('click', function (e) {
     }
 })
 
-
 clearButton.addEventListener('click', function (e) {
     books.splice(0, books.length)
     renderBooks(books)
 })
+
+renderBooks(books)
