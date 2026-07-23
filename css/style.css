@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #F5F0E8;
+    background-color: #14181c;
     font-family: 'inter', sans-serif;
 }
 
@@ -15,7 +15,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #C4A882;
+    background-color: #1c2228;
     padding: 10px;
     justify-content: left;
     gap: 10px;
@@ -26,11 +26,11 @@ header {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background-color: #C4A882;
+    background-color: #1c2228;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    color: #F5F0E8;
+    color: #ffffff;
 }
 
 #total-books {
@@ -38,7 +38,7 @@ header {
     margin: 0 auto;
     text-align: center;
     margin-top: 10px;
-    color: #C4A882;
+    color: #ffffff;
 }
 
 #add-book {
@@ -75,3 +75,40 @@ select {
     display: none !important;
 }
 
+article {
+    background-color: #1c2228;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.book-cover{
+    height: 200px;
+    background-color: #2c3440;
+   
+}
+
+.book-info {
+    padding: 12px;
+}
+
+#book-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+#logged-books-view {
+    width: 100%;
+    align-self: flex-start;
+    margin-top: -60px;
+}
+
+.toolbar {
+    width: 100%;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+}

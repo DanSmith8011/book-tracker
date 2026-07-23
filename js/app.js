@@ -15,6 +15,8 @@ const loggedBookSection = document.getElementById('logged-books-view')
 const filter = document.getElementById('select-filter')
 const filterButton = document.getElementById('filter-button')
 const clearButton = document.getElementById('clear-button')
+const exploreBooksNav = document.getElementById('nav-explore')
+const explorePage = document.getElementById('explore-page')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -47,12 +49,14 @@ function renderBooks(arr) {
         arr.forEach(book =>  {
         const bookCard = document.createElement('article')
         bookCard.innerHTML = `
-   
+        <div class="book-cover"></div>
+        <div class="book-info">
         <h2>${book.title}</h2>
         <p>${book.author}</p>
         <p>${book.year}</p>
         <p>${book.genre}</p>
         <button data-id=${book.id} >Delete</button>
+        </div>
         `
         bookCard.querySelector('button').addEventListener('click', function (e){
             const selectedId = this.dataset.id
@@ -71,11 +75,19 @@ function renderBooks(arr) {
 navHome.addEventListener('click', function (e){
     loggedBookSection.classList.add('hidden')
     formSection.classList.remove('hidden')
+    explorePage.classList.add('hidden')
 })
 
 loggedBooksNav.addEventListener('click', function (e){
     loggedBookSection.classList.remove('hidden')
     formSection.classList.add('hidden')
+    explorePage.classList.add('hidden')
+})
+
+exploreBooksNav.addEventListener ('click', function (e){
+    loggedBookSection.classList.add('hidden')
+    formSection.classList.add('hidden')
+    explorePage.classList.remove('hidden')
 })
 
 filterButton.addEventListener('click', function (e) {
@@ -93,5 +105,7 @@ clearButton.addEventListener('click', function (e) {
     books.splice(0, books.length)
     renderBooks(books)
 })
+
+
 
 renderBooks(books)
