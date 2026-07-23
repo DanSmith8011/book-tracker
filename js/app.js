@@ -17,6 +17,8 @@ const filterButton = document.getElementById('filter-button')
 const clearButton = document.getElementById('clear-button')
 const exploreBooksNav = document.getElementById('nav-explore')
 const explorePage = document.getElementById('explore-page')
+const searchButton = document.getElementById('search-button')
+const searchBar = document.getElementById('search-bar')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -106,6 +108,16 @@ clearButton.addEventListener('click', function (e) {
     renderBooks(books)
 })
 
+async function searchBooks (query) {
+const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=YOUR_KEY`
+const response = await fetch(url)
+const data = await response.json()
+console.log(data)
+}
 
+searchButton.addEventListener('click', function (e){
+    const searchValue = searchBar.value
+    searchBooks(searchValue)
+})
 
 renderBooks(books)
