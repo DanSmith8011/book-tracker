@@ -19,6 +19,7 @@ const exploreBooksNav = document.getElementById('nav-explore')
 const explorePage = document.getElementById('explore-page')
 const searchButton = document.getElementById('search-button')
 const searchBar = document.getElementById('search-bar')
+const exploreLog = document.getElementById('explore-book-cards')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -109,15 +110,36 @@ clearButton.addEventListener('click', function (e) {
 })
 
 async function searchBooks (query) {
-const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=YOUR_KEY`
+const url = `https://openlibrary.org/search.json?q=${query}`
 const response = await fetch(url)
 const data = await response.json()
-console.log(data)
+
+
+renderExploreBooks(data.docs)
 }
 
 searchButton.addEventListener('click', function (e){
     const searchValue = searchBar.value
     searchBooks(searchValue)
 })
+
+function renderExploreBooks (array) {
+    exploreLog.innerHTML = ''
+    array.forEach(books => {
+        const exploreBookCard = document.createElement('article')
+        exploreBookCard.innerHTML = `
+        <div class="explore-book-cover"></div>
+        <div class="explore-book-info">
+        <h2>${books.title}</h2>
+        <p>${books.author_name ? books.author_name[0] : 'Uknown Author'}</p>
+        <p>${books.first_publish_year}</p>
+        ${books.cover_i ? `<img src="https://covers.openlibrary.org/b/id/${books.cover_i}-M.jpg" />` : `<div class="placeholder"></div>`}
+        </div>
+        `
+        exploreLog.appendChild(exploreBookCard)
+
+    })
+} 
+
 
 renderBooks(books)
