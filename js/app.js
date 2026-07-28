@@ -114,8 +114,8 @@ const url = `https://openlibrary.org/search.json?q=${query}`
 const response = await fetch(url)
 const data = await response.json()
 
-
-renderExploreBooks(data.docs)
+const booksWithCovers = data.docs.filter(book => book.cover_i)
+renderExploreBooks(booksWithCovers)
 }
 
 searchButton.addEventListener('click', function (e){
@@ -138,8 +138,10 @@ function renderExploreBooks (array) {
         `
         exploreLog.appendChild(exploreBookCard)
 
+
     })
 } 
+
 
 
 renderBooks(books)
