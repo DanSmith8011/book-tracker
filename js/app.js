@@ -25,15 +25,14 @@ const exploreLog = document.getElementById('explore-book-cards')
     e.preventDefault()
     if (title.value && author.value && year.value && genre.value) {
         const newBook = {
-            id: Date.now(),
             title: title.value,
             author: author.value,
             year: year.value,
             genre: genre.value
         }
 
-    books.push(newBook)
-    renderBooks(books)
+    addBook(newBook)
+    
     totalBooks.textContent = `Total Books Logged: ${books.length}`
     } else {
         alert('Please fill out all the fields')
@@ -41,12 +40,14 @@ const exploreLog = document.getElementById('explore-book-cards')
 
 form.reset()
 
+
 })
 
 function renderBooks(arr) {
+    
     bookLog.innerHTML = ''
-
-    if (books.length == 0) {
+    console.log('bookLog element:', bookLog)
+    if (arr.length == 0) {
          bookLog.innerHTML = '<p>No books logged yet</p>'
     } else {
         arr.forEach(book =>  {
@@ -63,9 +64,7 @@ function renderBooks(arr) {
         `
         bookCard.querySelector('button').addEventListener('click', function (e){
             const selectedId = this.dataset.id
-            const index = books.findIndex(b => b.id == selectedId)
-            books.splice(index, 1)
-            renderBooks(books)
+            deleteBook(selectedId)
         })
 
         bookLog.appendChild(bookCard)
@@ -87,10 +86,11 @@ loggedBooksNav.addEventListener('click', function (e){
     explorePage.classList.add('hidden')
 })
 
-exploreBooksNav.addEventListener ('click', function (e){
-    loggedBookSection.classList.add('hidden')
+loggedBooksNav.addEventListener('click', function(e) {
+    loggedBookSection.classList.remove('hidden')
     formSection.classList.add('hidden')
-    explorePage.classList.remove('hidden')
+    explorePage.classList.add('hidden')
+    getBooks()
 })
 
 filterButton.addEventListener('click', function (e) {
@@ -142,6 +142,28 @@ function renderExploreBooks (array) {
     })
 } 
 
+async function getBooks() {
+    const url = `http://localhost:8000/books`
+    const response = await fetch(url)
+    const data = await response.json()
+    console.log(data)
+    renderBooks(data)
+}
 
+getBooks()
 
-renderBooks(books)
+async function addBook(newBook){
+    const response = await fetch('http://localhost:8000/books', {
+        method: 'POST', 
+        headers: {'Content-Type': 'application/json' },
+        body: JSON.stringify(newBook)
+    })
+    getBooks()
+}
+
+async function deleteBook(bookId){
+    const response = await fetch(`http://localhost:8000/books/${bookId}`,{
+        method: 'DELETE'
+    })
+    getBooks()
+}
