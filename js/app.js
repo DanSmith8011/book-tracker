@@ -33,7 +33,7 @@ const exploreLog = document.getElementById('explore-book-cards')
 
     addBook(newBook)
     
-    totalBooks.textContent = `Total Books Logged: ${books.length}`
+    
     } else {
         alert('Please fill out all the fields')
     }
@@ -146,8 +146,8 @@ async function getBooks() {
     const url = `http://localhost:8000/books`
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
     renderBooks(data)
+    totalBooks.textContent = `Total Books Logged: ${data.length}`
 }
 
 getBooks()
