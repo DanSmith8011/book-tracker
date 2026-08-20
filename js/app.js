@@ -20,6 +20,17 @@ const explorePage = document.getElementById('explore-page')
 const searchButton = document.getElementById('search-button')
 const searchBar = document.getElementById('search-bar')
 const exploreLog = document.getElementById('explore-book-cards')
+const toolBar = document.querySelector('.toolbar')
+const loginView = document.getElementById('login-view')
+const registerView = document.getElementById('register-view')
+const usernameInput = document.getElementById('username-input')
+const passwordInput = document.getElementById('password-input')
+const loginButton = document.getElementById('login')
+const registerUsername = document.getElementById('register-username')
+const registerPassword = document.getElementById('register-password')
+const registerButton = document.getElementById('register')
+const goToRegister = document.getElementById('go-to-register')
+const goToLogin = document.getElementById('go-to-login')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -49,7 +60,10 @@ function renderBooks(arr) {
     console.log('bookLog element:', bookLog)
     if (arr.length == 0) {
          bookLog.innerHTML = '<p>No books logged yet</p>'
+         toolBar.classList.add('hidden')
+         totalBooks.classList.add('hidden')
     } else {
+        toolBar.classList.remove('hidden')
         arr.forEach(book =>  {
         const bookCard = document.createElement('article')
         bookCard.innerHTML = `
@@ -68,7 +82,6 @@ function renderBooks(arr) {
         })
 
         bookLog.appendChild(bookCard)
-
      
         })}
 
@@ -84,14 +97,29 @@ loggedBooksNav.addEventListener('click', function (e){
     loggedBookSection.classList.remove('hidden')
     formSection.classList.add('hidden')
     explorePage.classList.add('hidden')
-})
-
-loggedBooksNav.addEventListener('click', function(e) {
-    loggedBookSection.classList.remove('hidden')
-    formSection.classList.add('hidden')
-    explorePage.classList.add('hidden')
     getBooks()
 })
+
+exploreBooksNav.addEventListener('click', function(e) {
+    loggedBookSection.classList.add('hidden')
+    formSection.classList.add('hidden')
+    explorePage.classList.remove('hidden')
+    searchBooks('popular fiction')
+})
+
+goToLogin.addEventListener('click', function (e){
+    registerView.classList.add('hidden')
+    loginView.classList.remove('hidden')
+
+})
+
+goToRegister.addEventListener('click', function (e){
+    registerView.classList.remove('hidden')
+    loginView.classList.add('hidden')
+
+})
+
+
 
 filterButton.addEventListener('click', function (e) {
     const selectedGenre = filter.value
@@ -134,8 +162,19 @@ function renderExploreBooks (array) {
         <p>${books.author_name ? books.author_name[0] : 'Uknown Author'}</p>
         <p>${books.first_publish_year}</p>
         ${books.cover_i ? `<img src="https://covers.openlibrary.org/b/id/${books.cover_i}-M.jpg" />` : `<div class="placeholder"></div>`}
+        <button id='explore-book-log'>Log Book</button>
         </div>
         `
+        exploreBookCard.querySelector('button').addEventListener('click', function (e){
+             const newBook = {
+            title: books.title,
+            author: books.author_name ? books.author_name[0] : 'Uknown Author',
+            year: books.first_publish_year,
+            genre: 'unkown'
+        }
+            addBook(newBook)
+        })
+
         exploreLog.appendChild(exploreBookCard)
 
 
@@ -150,7 +189,6 @@ async function getBooks() {
     totalBooks.textContent = `Total Books Logged: ${data.length}`
 }
 
-getBooks()
 
 async function addBook(newBook){
     const response = await fetch('http://localhost:8000/books', {
@@ -167,3 +205,21 @@ async function deleteBook(bookId){
     })
     getBooks()
 }
+
+async function register(){
+const response = await fetch(`http://localhost:8000/users`, {
+        method: 'POST', 
+        headers: {'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: registerUsername.value,
+            password: registerPassword.value
+        })
+
+    })
+        registerView.classList.add('hidden')
+        loginView.classList.remove('hidden')
+}
+
+registerButton.addEventListener('click', function (e){
+    register()
+})

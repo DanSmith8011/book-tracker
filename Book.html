@@ -24,7 +24,7 @@
 <!-- FORM PAGE -->
  
 
-    <section id="form-view">
+    <section id="form-view" class="hidden">
       <h2 id="log-book">Log Book</h2>
       <form id="form">
         <label>Title:</label>
@@ -115,7 +115,48 @@
 <div id='explore-book-cards'></div> 
 
 </section>
-  
+
+<!-- LOGIN PAGE -->
+
+<section id="login-view">
+<h2 id="login-page">Login</h2>
+<form> 
+<label>Username</label>
+<input id="username-input"  placeholder="Username">
+
+
+<label>Password</label>
+<input id="password-input" type="password" placeholder="Password">
+
+<button type="button" id="login">Login</button>
+
+<p>Don't have an account? <a href="#" id="go-to-register">Register here</a></p>
+
+</form>
+
+</section>
+
+<!-- REGISTER PAGE -->
+
+<section id="register-view" class="hidden">
+<h2 id="register-page">Register</h2>
+<form> 
+<label>Username</label>
+<input id="register-username" placeholder="Create Username">
+
+
+<label>Password</label>
+<input id="register-password" type="password" placeholder="Create Password">
+
+<button type="button" id="register">Register</button>
+
+<p>Already have an account? <a href="#" id="go-to-login">Login here</a></p>
+
+</form>
+
+</section>
+
+
     <script src="js/app.js"></script>
   </body>
 </html>
