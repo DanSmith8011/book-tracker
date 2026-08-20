@@ -1,4 +1,5 @@
 const books = []
+let token = null
 
 const form = document.getElementById('form')
 const title = document.getElementById('book-title')
@@ -31,6 +32,7 @@ const registerPassword = document.getElementById('register-password')
 const registerButton = document.getElementById('register')
 const goToRegister = document.getElementById('go-to-register')
 const goToLogin = document.getElementById('go-to-login')
+const navBar = document.getElementById('main-header')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -222,4 +224,27 @@ const response = await fetch(`http://localhost:8000/users`, {
 
 registerButton.addEventListener('click', function (e){
     register()
+})
+
+async function login(){
+    
+    const response = await fetch(`http://localhost:8000/login`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', },
+        body: JSON.stringify({
+            username: usernameInput.value,
+            password: passwordInput.value
+        })
+    })
+    const data = await response.json()
+    console.log(data)
+    token = data
+    loginView.classList.add('hidden')
+    explorePage.classList.remove('hidden')
+    navBar.classList.remove('hidden')
+
+}
+ loginButton.addEventListener('click', function (e){
+    login()
+    searchBooks('popular fiction')
 })
