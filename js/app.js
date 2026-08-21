@@ -1,4 +1,4 @@
-const books = []
+let books = []
 let token = null
 
 const form = document.getElementById('form')
@@ -185,8 +185,11 @@ function renderExploreBooks (array) {
 
 async function getBooks() {
     const url = `http://localhost:8000/books`
-    const response = await fetch(url)
+    const response = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
     const data = await response.json()
+    books = data
     renderBooks(data)
     totalBooks.textContent = `Total Books Logged: ${data.length}`
 }
@@ -195,7 +198,7 @@ async function getBooks() {
 async function addBook(newBook){
     const response = await fetch('http://localhost:8000/books', {
         method: 'POST', 
-        headers: {'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(newBook)
     })
     getBooks()
@@ -203,7 +206,8 @@ async function addBook(newBook){
 
 async function deleteBook(bookId){
     const response = await fetch(`http://localhost:8000/books/${bookId}`,{
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
     })
     getBooks()
 }
