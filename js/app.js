@@ -134,10 +134,7 @@ filterButton.addEventListener('click', function (e) {
     }
 })
 
-clearButton.addEventListener('click', function (e) {
-    books.splice(0, books.length)
-    renderBooks(books)
-})
+
 
 async function searchBooks (query) {
 const url = `https://openlibrary.org/search.json?q=${query}`
