@@ -33,6 +33,7 @@ const registerButton = document.getElementById('register')
 const goToRegister = document.getElementById('go-to-register')
 const goToLogin = document.getElementById('go-to-login')
 const navBar = document.getElementById('main-header')
+const reccomendBox = document.getElementsById('reccomend-box')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -249,3 +250,30 @@ async function login(){
     login()
     searchBooks('popular fiction')
 })
+
+
+function recommendation(array){
+    booksGenre = {}
+
+    books.forEach(book => {
+    if (book.genre !== 'unknown') {
+        if (booksGenre.hasOwnProperty(book.genre)) {
+            booksGenre[book.genre] += 1
+        } else {
+            booksGenre[book.genre] = 1
+        }
+    }
+   
+})
+    let highestValue = 0
+    let recommendedGenre = ''
+
+    for (let genre in booksGenre) {
+        if (highestValue < booksGenre[genre]) {
+            highestValue = booksGenre[genre]
+            recommendedGenre = genre
+        }
+        }
+
+       
+        }
