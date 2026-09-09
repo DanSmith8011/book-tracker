@@ -33,7 +33,8 @@ const registerButton = document.getElementById('register')
 const goToRegister = document.getElementById('go-to-register')
 const goToLogin = document.getElementById('go-to-login')
 const navBar = document.getElementById('main-header')
-const reccomendBox = document.getElementsById('reccomend-box')
+const reccomendBox = document.getElementById('reccomend-box-view')
+const recommendedbook = document.getElementById('recommended-book')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -96,11 +97,13 @@ navHome.addEventListener('click', function (e){
     explorePage.classList.add('hidden')
 })
 
-loggedBooksNav.addEventListener('click', function (e){
+loggedBooksNav.addEventListener('click', async function (e){
     loggedBookSection.classList.remove('hidden')
+    reccomendBox.classList.remove('hidden')
     formSection.classList.add('hidden')
     explorePage.classList.add('hidden')
     getBooks()
+    renderRecomendedBook(await getRecommendation())
 })
 
 exploreBooksNav.addEventListener('click', function(e) {
@@ -170,7 +173,7 @@ function renderExploreBooks (array) {
             title: books.title,
             author: books.author_name ? books.author_name[0] : 'Uknown Author',
             year: books.first_publish_year,
-            genre: 'unkown'
+            genre: 'unknown'
         }
             addBook(newBook)
         })
@@ -272,8 +275,51 @@ function recommendation(array){
         if (highestValue < booksGenre[genre]) {
             highestValue = booksGenre[genre]
             recommendedGenre = genre
-        }
-        }
-
+        }}
+        return recommendedGenre
+    }
        
-        }
+async function getReccomendedBooks(recommendedGenre){
+     const url = `https://openlibrary.org/search.json?q=${recommendedGenre}`
+     const response = await fetch(url)
+     const data = await response.json()
+     const reccomendArray = data.docs
+     const randomBook = Math.floor(Math.random() * reccomendArray.length);
+     return reccomendArray[randomBook]
+   }
+
+
+   async function getRecommendation(){
+     const recommendedGenre = recommendation()
+     const genreFetch = await getReccomendedBooks(recommendedGenre)
+     return genreFetch
+   }
+
+async function renderRecomendedBook (){
+    const book = await getRecommendation()
+    recommendedbook.innerHTML = ''
+    const reccomendBookCard = document.createElement('article')
+    reccomendBookCard.innerHTML = `
+    <div class="recommend-book-cover"></div>
+        <div class="recommend-book-info">
+        <h2>${book.title}</h2>
+        <p>${book.author_name ? book.author_name[0] : 'Uknown Author'}</p>
+        <p>${book.first_publish_year}</p>
+        ${book.cover_i ? `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" />` : `<div class="placeholder"></div>`}
+        <button id='recommend-book-log'>Log Book</button>
+        </div>
+    `
+    reccomendBookCard.querySelector('button').addEventListener('click', function (e){
+             const newBook = {
+            title: book.title,
+            author: book.author_name ? book.author_name[0] : 'Uknown Author',
+            year: book.first_publish_year,
+            genre: 'unknown'
+}
+    addBook(newBook)
+})
+    recommendedbook.appendChild(reccomendBookCard)
+    
+    
+}
+
