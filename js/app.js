@@ -72,6 +72,7 @@ function renderBooks(arr) {
         const bookCard = document.createElement('article')
         bookCard.innerHTML = `
         <div class="book-cover"></div>
+        ${book.cover_i ? `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" />` : `<div class="placeholder"></div>`}
         <div class="book-info">
         <h2>${book.title}</h2>
         <p>${book.author}</p>
@@ -97,13 +98,13 @@ navHome.addEventListener('click', function (e){
     explorePage.classList.add('hidden')
 })
 
-loggedBooksNav.addEventListener('click', async function (e){
+loggedBooksNav.addEventListener('click', function (e){
     loggedBookSection.classList.remove('hidden')
     reccomendBox.classList.remove('hidden')
     formSection.classList.add('hidden')
     explorePage.classList.add('hidden')
     getBooks()
-    renderRecomendedBook(await getRecommendation())
+    renderRecomendedBook()
 })
 
 exploreBooksNav.addEventListener('click', function(e) {
@@ -292,29 +293,34 @@ async function getReccomendedBooks(recommendedGenre){
    async function getRecommendation(){
      const recommendedGenre = recommendation()
      const genreFetch = await getReccomendedBooks(recommendedGenre)
-     return genreFetch
+     return {
+        fetchedBook: genreFetch,
+        genre: recommendedGenre
+     }
    }
 
 async function renderRecomendedBook (){
     const book = await getRecommendation()
+    const final = book.fetchedBook
+    const booksGenre = book.genre
     recommendedbook.innerHTML = ''
     const reccomendBookCard = document.createElement('article')
     reccomendBookCard.innerHTML = `
     <div class="recommend-book-cover"></div>
         <div class="recommend-book-info">
-        <h2>${book.title}</h2>
-        <p>${book.author_name ? book.author_name[0] : 'Uknown Author'}</p>
-        <p>${book.first_publish_year}</p>
-        ${book.cover_i ? `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" />` : `<div class="placeholder"></div>`}
+        <h2>${final.title}</h2>
+        <p>${final.author_name ? final.author_name[0] : 'Uknown Author'}</p>
+        <p>${final.first_publish_year}</p>
+        ${final.cover_i ? `<img src="https://covers.openlibrary.org/b/id/${final.cover_i}-M.jpg" />` : `<div class="placeholder"></div>`}
         <button id='recommend-book-log'>Log Book</button>
         </div>
     `
     reccomendBookCard.querySelector('button').addEventListener('click', function (e){
-             const newBook = {
-            title: book.title,
-            author: book.author_name ? book.author_name[0] : 'Uknown Author',
-            year: book.first_publish_year,
-            genre: 'unknown'
+            const newBook = {
+            title: final.title,
+            author: final.author_name ? final.author_name[0] : 'Uknown Author',
+            year: final.first_publish_year,
+            genre: booksGenre
 }
     addBook(newBook)
 })
