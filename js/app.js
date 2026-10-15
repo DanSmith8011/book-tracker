@@ -35,6 +35,7 @@ const goToLogin = document.getElementById('go-to-login')
 const navBar = document.getElementById('main-header')
 const reccomendBox = document.getElementById('reccomend-box-view')
 const recommendedbook = document.getElementById('recommended-book')
+const logout = document.getElementById('logout')
 
  addBookButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -243,13 +244,12 @@ async function login(){
         })
     })
     const data = await response.json()
-    console.log(data)
+    if (response.ok) {
     token = data
     loginView.classList.add('hidden')
     explorePage.classList.remove('hidden')
     navBar.classList.remove('hidden')
-
-}
+}}
  loginButton.addEventListener('click', function (e){
     login()
     searchBooks('popular fiction')
@@ -329,3 +329,9 @@ async function renderRecomendedBook (){
     
 }
 
+logout.addEventListener('click', function(e) {
+    token = null
+    loginView.classList.remove('hidden')
+    explorePage.classList.add('hidden')
+    navBar.classList.add('hidden')
+})
