@@ -1,3 +1,8 @@
+// Automatically switches between local and live depending on where you are running it
+const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:8000" 
+    : "https://book-tracker-api-40yn.onrender.com";
+
 let books = []
 let token = null
 
@@ -187,7 +192,7 @@ function renderExploreBooks (array) {
 } 
 
 async function getBooks() {
-    const url = `http://localhost:8000/books`
+    const url = `${API_BASE_URL}/books`
     const response = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}` }
     })
@@ -199,7 +204,7 @@ async function getBooks() {
 
 
 async function addBook(newBook){
-    const response = await fetch('http://localhost:8000/books', {
+    const response = await fetch(`${API_BASE_URL}/books`, {
         method: 'POST', 
         headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(newBook)
@@ -208,7 +213,7 @@ async function addBook(newBook){
 }
 
 async function deleteBook(bookId){
-    const response = await fetch(`http://localhost:8000/books/${bookId}`,{
+    const response = await fetch(`${API_BASE_URL}/books/${bookId}`,{
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     })
@@ -216,7 +221,7 @@ async function deleteBook(bookId){
 }
 
 async function register(){
-const response = await fetch(`http://localhost:8000/users`, {
+const response = await fetch(`${API_BASE_URL}/users`, {
         method: 'POST', 
         headers: {'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -235,7 +240,7 @@ registerButton.addEventListener('click', function (e){
 
 async function login(){
     
-    const response = await fetch(`http://localhost:8000/login`, {
+    const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', },
         body: JSON.stringify({
